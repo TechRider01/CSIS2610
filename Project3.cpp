@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <random>
-
+#include <unistd.h>
 using namespace std;
 
 const int
@@ -339,7 +339,7 @@ void fillCell(int board[][4]) {
                 n++;
 
     // choose random number between 1 and n
-    uniform_int_distribution
+    uniform_int_distribution<>
         dis1(1,n);
 
     randVal = dis1(mt);
@@ -365,7 +365,7 @@ void fillCell(int board[][4]) {
     }
 
     // choose random number from 1 to D
-    uniform_int_distribution
+    uniform_int_distribution<>
         dis2(1,D);
 
     randVal = dis2(mt);
@@ -442,14 +442,37 @@ int main() {
 
         // apply move
         if (ch == 'u' && canSlideU(board))
+        {
             slideU(board,score);
+            fillCell(board);
+        } else if (ch == 'u' && !canSlideU(board)) {
+        	cout << "Not a valid move" << endl;
+        	sleep(2);
+        }
         if (ch == 'l' && canSlideL(board))
+        {
             slideL(board,score);
-        if (ch == 'r' && canSlideR(board))
+            fillCell(board);
+        } else if (ch == 'l' && !canSlideL(board)) {
+        	cout << "Not a valid move" << endl;
+        	sleep(2);
+        }
+       	if (ch == 'r' && canSlideR(board))
+        {
             slideR(board,score);
+            fillCell(board);
+        } else if (ch == 'r' && !canSlideR(board)) {
+        	cout << "Not a valid move" << endl;
+        	sleep(2);
+        }
         if (ch == 'd' && canSlideD(board))
+        {
             slideD(board,score);
-        fillCell(board);
+            fillCell(board);
+        } else if (ch == 'd' && !canSlideD(board)) {
+        	cout << "Not a valid move" << endl;
+        	sleep(2);
+        }
 
         // } end loop
     } while (ch != 'q' && ch != 'Q');
